@@ -1,0 +1,74 @@
+import pandas as pd
+import numpy as np
+from sklearn.impute import SimpleImputer
+
+# Sample DataFrame with missing values
+data = {'A': [1, 2, np.nan, 4, 5],
+        'B': [5, np.nan, np.nan, 8, 10],
+        'C': ['cat', 'dog', np.nan, 'cat', 'dog']}
+df = pd.DataFrame(data)
+
+# Mean Imputation
+mean_imputer = SimpleImputer(strategy='mean')
+df['A'] = mean_imputer.fit_transform(df[['A']])
+
+# Median Imputation
+median_imputer = SimpleImputer(strategy='median')
+df['B'] = median_imputer.fit_transform(df[['B']])
+
+# Mode Imputation (most frequent)
+mode_imputer = SimpleImputer(strategy='most_frequent')
+df['C'] = mode_imputer.fit_transform(df[['C']])
+
+print(df)
+
+# Sample DataFrame with missing values
+data = {'A': [1, 2, np.nan, 4, 5],
+        'B': [5, np.nan, np.nan, 8, 10]}
+df = pd.DataFrame(data)
+
+# Forward Fill
+df_ffill = df.ffill()
+
+# Backward Fill
+df_bfill = df.bfill()
+
+print("Forward Fill:\n", df_ffill)
+print("Backward Fill:\n", df_bfill)
+
+from sklearn.impute import KNNImputer
+
+# Sample DataFrame with missing values
+data = {'A': [1, 2, np.nan, 4, 5],
+        'B': [5, np.nan, np.nan, 8, 10]}
+df = pd.DataFrame(data)
+
+# KNN Imputation
+knn_imputer = KNNImputer(n_neighbors=2)
+df_knn_imputed = pd.DataFrame(knn_imputer.fit_transform(df), columns=df.columns)
+
+print(df_knn_imputed)
+
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+
+# Sample DataFrame with missing values
+data = {'A': [1, 2, np.nan, 4, 5],
+        'B': [5, np.nan, np.nan, 8, 10]}
+df = pd.DataFrame(data)
+
+# MICE Imputation
+iter_imputer = IterativeImputer(max_iter=10, random_state=0)
+df_mice_imputed = pd.DataFrame(iter_imputer.fit_transform(df), columns=df.columns)
+
+print(df_mice_imputed)
+
+# Sample DataFrame with missing values
+data = {'A': [1, 2, np.nan, 4, 5],
+        'B': [5, np.nan, np.nan, 8, 10]}
+df = pd.DataFrame(data)
+
+# Linear Interpolation
+df_interpolated = df.interpolate()
+
+print(df_interpolated)
